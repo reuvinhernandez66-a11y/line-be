@@ -17,7 +17,7 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['https://mirabo-dashboard.com/', 'https://mirabo-dashboard.com'],
 
     'allowed_origins' => ['*'],
 
