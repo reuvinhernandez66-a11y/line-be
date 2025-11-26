@@ -6,7 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -15,7 +17,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        try {
+            $users = User::all();
+            return $users;
+        } catch (\Exception $e) {
+            Log::error('Error fetching users: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch users'
+            ], 500);
+        }
     }
 
     /**
@@ -51,14 +63,16 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if(empty($user) || !$user){
+        if (!$user) {
             return response()->json([
-                'message' => 'Failed to fetch user'
-            ], 200);
+                'success' => false,
+                'message' => 'User not found'
+            ], 404);
         }
 
         return response()->json([
-            'users' => $user
+            'success' => true,
+            'data' => $user
         ], 200);
     }
 
