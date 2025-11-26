@@ -97,6 +97,10 @@ class AnswerController extends Controller
                 'answer' => $answers
             ], 200);
         }catch(Exception $e){
+            Log::info('THIS IS THE ERROR FOR GENERATING ANSWERS: ', [
+                'error' => $e
+            ]);
+
             return response()->json([
                 'message' => $e->getMessage()
             ], 400);

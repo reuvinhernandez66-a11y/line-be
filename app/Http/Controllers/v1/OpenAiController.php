@@ -323,8 +323,6 @@ class OpenAiController extends Controller
 
 
             $response = $result->choices[0]->message->content;
-
-            // Ensure the response is in Japanese
             if (!preg_match('/[\p{Hiragana}\p{Katakana}\p{Han}]/u', $response)) {
                 Log::warning("Unexpected language in response: " . $response);
                 return response()->json(['error' => 'Generated response is not in Japanese'], 500);
